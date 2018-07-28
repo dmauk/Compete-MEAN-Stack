@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 require('./models/Posts');
 require('./models/Comments');
 
-mongoose.connect('mongodb://localhost/compete');
+mongoose.connect('mongodb://localhost:27017/compete', { useNewUrlParser: true });
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
