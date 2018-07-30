@@ -4,8 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var passport = require('passport');
+
 require('./models/Posts');
 require('./models/Comments');
+require('./models/Users');
+require('./config/passport');
 
 mongoose.connect('mongodb://localhost:27017/compete', { useNewUrlParser: true });
 
@@ -23,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
