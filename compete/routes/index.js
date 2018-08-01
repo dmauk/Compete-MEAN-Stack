@@ -8,23 +8,42 @@ var Post = mongoose.model('Post');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 
-/* GET posts */ 
+/* GET posts */
 router.get('/posts', function(req, res, next) {
   Post.find(function(err, posts){
     if(err) { return next(err); }
-
 	res.json(posts);
   });
 });
 
-/* POST a post */ 
+/*GET a user's posts */
+router.get('/posts/user/:user', function(req, res) {
+  req.user.populate('posts', function(err, user) {
+    if(err) { return next(err); }
+      res.json(user.posts);
+  });
+});
+
+router.get('/users/:user', function(req, res) {
+  req.user.populate('posts', function(err, user) {
+    if(err) { return next(err); }
+    res.json(user);
+  });
+});
+
+/* POST a post */
 router.post('/posts', auth, function(req, res, next) {
   var post = new Post(req.body);
   post.author = req.payload.username;
-  post.save(function(err, post){
-	if(err){ return next(err); }
-	
+  User.findOne({username: req.payload.username}, function(err, user){
+    if(err) { return next(err); }
+    if(!user) { return next (new Error('can\'t find user')); }
+      post.save(function(err, post) {
+        if(err){ return next(err); }
+	user.posts.push(post);
+	user.save();
 	res.json(post);
+      });
   });
 });
 
@@ -38,12 +57,20 @@ router.post('/register', function(req, res, next){
   user.username = req.body.username;
 
   user.setPassword(req.body.password);
-  
+
   user.save(function (err){
     if(err) { return next(err); }
 
 	return res.json({token: user.generateJWT()});
   });
+});
+
+router.post('/editProfile', function(req, res, next){
+  if(!req.body.profileImg) {
+    return res.status(400).json({message: 'There are no changes to the profile.'});
+  }
+
+
 });
 
 router.post('/login', function(req, res, next){
@@ -65,7 +92,7 @@ router.post('/login', function(req, res, next){
 /* Preload post object if it is a PARAM in a url */
 router.param('post', function(req, res, next, id) {
   var query = Post.findById(id);
-	
+
   query.exec(function (err, post){
     if(err) { return next(err); }
 	if(!post) { return next (new Error('can\'t find post')); }
@@ -84,6 +111,18 @@ router.param('comment', function(req, res, next, id){
 
 	req.comment = comment;
 	return next();
+  });
+});
+
+router.param('user', function(req, res, next, username){
+  var query = User.findOne({username: username}, {username:1, posts:1});
+
+  query.exec(function (err, user){
+    if(err) { return next(err); }
+    if(!user) { return next (new Error('can\'t find user')); }
+
+    req.user = user;
+    return next();
   });
 });
 
@@ -114,7 +153,7 @@ router.post('/posts/:post/comments', auth, function(req, res, next) {
 	var comment = new Comment(req.body);
 	comment.post = req.post;
 	comment.author = req.payload.username;
-	
+
 	comment.save(function(err, comment){
 	  if(err) { return next(err); }
 

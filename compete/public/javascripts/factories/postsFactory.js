@@ -9,6 +9,12 @@ app.factory('posts', ['$http','auth', function($http, auth){
 	});
   };
 
+  o.getUserPosts = function(username) {
+    return $http.get('/posts/user/' + username).then(function(res){
+      return res.data;
+    });
+  }
+
   o.create = function(post) {
     return $http.post('/posts', post, {
 	  headers: {Authorization: 'Bearer '+auth.getToken()}

@@ -5,7 +5,10 @@ var jwt = require('jsonwebtoken');
 var UserSchema = new mongoose.Schema({
   username: {type: String, lowercase: true, unique: true},
   hash: String,
-  salt: String
+  salt: String,
+  totalUpvotes: Number,
+  profileImg: {data: Buffer, contentType: String},
+  posts: [{type: mongoose.Schema.Types.ObjectId, ref:'Post'}]
 });
 
 UserSchema.methods.setPassword = function(password){
@@ -28,7 +31,7 @@ UserSchema.methods.generateJWT = function() {
 
   return jwt.sign({
 	_id: this._id,
-	username: this.username, 
+	username: this.username,
 	exp: parseInt(exp.getTime() / 1000),
   }, 'SECRET'); //Todo: Change secret to environment VARIABLE
 };
