@@ -13,8 +13,7 @@
   <script src="javascripts/controllers/authController.js"></script>
   <script src="javascripts/controllers/navController.js"></script>
   <script src="javascripts/controllers/profileController.js"></script>
-
-  <style> .glyphicon-thumbs-up { cursor:pointer } </style>
+  <style> a, a:hover, a:focus {text-decoration: none} </style>
 </head>
 <body ng-app="compete" ng-controller="MainCtrl">
 
@@ -22,10 +21,6 @@
   <% include ../public/templates/partials/navbar %>
 
   <!-- main app -->
-  <div class="row">
-	<div class="col-md-6 col-md-offset-3">
-		<ui-view></ui-view>
-	</div>
-  </div>
+  <ui-view></ui-view>
 </body>
 </html>

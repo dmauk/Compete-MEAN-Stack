@@ -1,21 +1,24 @@
-<div class="page-header">
-  <h1>Compete</h1>
-</div>
-
-<div ng-show="error" class="alert alert-danger row">
-  <span>{{ error.message }} </span>
-</div>
-
-<form ng-submit="register()" style="margin-top:30px;">
-  <h3>Register</h3>
-
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Username" ng-model="user.username"></input>
+<div class="container">
+  <div class="text-center text-warning m-5">
+    <h2 class="font-weight-bold">Register</h2>
   </div>
-
-  <div class="form-group">
-    <input type="password" class="form-control" placeholder="Password" ng-model="user.password"></input>
+  <div class="row p-3 rounded text-white bg-dark mx-auto w-50">
+    <div class="col">
+    <form ng-submit="register()">
+      <div class="form-group">
+	    <label for="username">Username</label>
+		<input type="text" class="form-control" id="username" ng-model="user.username" placeholder="Enter Username"></input>
+		<small id="clever" class="form-text text-muted">Think of something clever!</small>
+	  </div>
+	  <div class="form-group">
+	    <label for="password">Password</label>
+		<input type="password" class="form-control" id="password" ng-model="user.password" placeholder="Enter Password"></input>
+		<small id="recommend" class="form-text text-muted">Write this down!</small>
+	  </div>
+	  <div class="text-center">
+	    <button type="submit" class="text-center btn btn-outline-warning">Register</button>
+	  </div>
+	</form>
+	</div>
   </div>
-  <button type="submit" class="btn btn primary">Register</button>
-</form>
-
+</div>

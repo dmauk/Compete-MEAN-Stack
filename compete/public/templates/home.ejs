@@ -1,39 +1,78 @@
-<div class="page-header">
-  <h1>Compete</h1>
-</div>
-
-<div ng-repeat="post in posts | orderBy:'-upvotes'">
-  <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post)"></span>
-  {{post.upvotes}}
-  <span style="font-size:20px; margin-left:10px;">
-	<a ng-show="post.link" href="{{post.link}}">
-	  {{post.title}}
-	</a>
-	<span ng-hide="post.link">
-	  {{post.title}}
-	</span>
-  </span>
-  <span ng-show="post.author">
-	posted by <a href="#/profile/{{post.author}}">{{post.author}}</a> |
-  </span>
-  <span>
-    <a href="#/posts/{{post._id}}">Comments</a>
-  </span>
-</div>
-
+<div class="container">
+  <div class="m-5 jumbotron">
+    <h1 class="display-4 text-info text-center">Compete</h1>
+  </div>
+  <div class="row">
+  <div class="col-lg">
+  <div ng-repeat="post in posts | orderBy:'-upvotes'">
+    <div class="container-fluid w-75 mb-2">
+	  <div class="row">
+	    <div style="height: 70px;" class="align-self-center col-3 bg-dark rounded">
+          <div class="text-center text-white">
+		    <div class="row h-100">
+			  <div class="border-right align-self-center font-weight-bold col-sm text-center">
+                {{post.upvotes}}
+		      </div>
+		      <div class="align-self-center font-weight-bold col-sm text-center">
+				<button class="btn btn-outline-success" type="button" ng-click="incrementUpvotes(post)">Like</button>
+		      </div>
+			</div>
+		  </div>
+	    </div>
+	    <div class="col-9">
+	      <div class="rounded mx-auto pt-3 pb-2 pl-3 pr-4 bg-dark text-white text-center">
+	        <div class="row">
+	          <div class="col">
+                <span style="font-size:20px; margin-left:10px;">
+                  <a class="text-info" ng-show="post.link" href="{{post.link}}">
+                    {{post.title}}
+                  </a>
+		        </span>
+                <span ng-hide="post.link">
+                  {{post.title}}
+                </span>
+		      </div>
+	        </div>
+			<hr class="mb-1 border-top border-white">
+	        <div class="row">
+			  <div class="col-9 text-left">
+			    <span ng-show="post.author">
+	              Posted by: <a class="text-info" href="/#/profile/{{post.author}}">{{post.author}}</a>
+		        </span>
+			  </div>
+			  <div class="col-3 text-right">
+                <span>
+                  <a class="text-info "href="#/posts/{{post._id}}">Comments</a>
+                </span>
+			  </div>
+		    </div>
+	      </div>
+	    </div>
+	  </div>  
+    </div>
+  </div>
+  </div>
+  </div>
+<div class="row text-center">
+<div class="col">
+<div class="mx-auto w-50">
+<hr class=""></hr>
 <form ng-submit="addPost()" ng-show="isLoggedIn()" style="margin-top:30px;">
   <h3>Add a new post</h3>
-
+  
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
+  <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
   </div>
-
+  
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Link" ng-model="link"></input>
+  <input type="text" class="form-control" placeholder="Link" ng-model="link"></input>
   </div>
-  <button type="submit" class="btn btn-primary">Post</button>
-</form>
-
-<div ng-hide="isLoggedIn()">
-  <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
+  <button type="submit" class="btn btn-info">Post</button>
+  </form>
+  
+  <div class="alert alert-warning" role="alert" ng-hide="isLoggedIn()">
+    You need to <a class="text-info" href="/#/login">Log In</a> or <a class="text-info" href="/#/register">Register</a> before you can add a post.
+  </div>
+  </div>
+  </div>
 </div>
