@@ -52,6 +52,10 @@ router.post('/register', function(req, res, next){
 	return res.status(400).json({message: 'Please fill out all fields'});
   }
 
+  if(User.findOne({username: req.body.username})){
+    return res.status(400).json({message: 'Username already exists!'});
+  }
+
   var user = new User();
 
   user.username = req.body.username;

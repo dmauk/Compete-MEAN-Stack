@@ -19,4 +19,9 @@
 	</form>
 	</div>
   </div>
+  <div ng-show="error" class="row mt-3">
+    <div class="col-4 text-center offset-md-4 alert alert-danger">
+	  <span>{{error.message}}</span>
+	</div>
+  </div>
 </div>
