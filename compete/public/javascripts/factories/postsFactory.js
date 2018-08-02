@@ -39,8 +39,8 @@ app.factory('posts', ['$http','auth', function($http, auth){
 
   o.addComment = function(id, comment) {
     return $http.post('/posts/' + id + '/comments', comment, {
-	  headers: {Authorization: 'Bearer ' +auth.getToken()}
-	});
+      headers: {Authorization: 'Bearer ' +auth.getToken()}
+    });
   };
 
   o.upvoteComment = function(post, comment) {

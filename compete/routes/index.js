@@ -155,14 +155,13 @@ router.post('/posts/:post/comments', auth, function(req, res, next) {
 	comment.author = req.payload.username;
 
 	comment.save(function(err, comment){
+	  res.json(comment);
 	  if(err) { return next(err); }
 
 	  req.post.comments.push(comment);
 	  req.post.save(function(err, post) {
-        if(err){ return next(err); }
-
-		res.json(comment);
-	  });
+            if(err){ return next(err); }
+	  })
 	});
 });
 
