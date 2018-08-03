@@ -47,14 +47,21 @@ router.post('/posts', auth, function(req, res, next) {
   });
 });
 
+router.post('/posts/:post/delete', auth, function(req, res, next){
+  Post.remove({_id: req.post._id}, function(err, data){
+    if(err) { return next(err); }
+      res.json(data);
+  });
+});
+
 router.post('/register', function(req, res, next){
   if(!req.body.username || !req.body.password){
 	return res.status(400).json({message: 'Please fill out all fields'});
   }
 
-  if(User.findOne({username: req.body.username})){
-    return res.status(400).json({message: 'Username already exists!'});
-  }
+  User.findOne({username: req.body.username}, function(err,user){
+    if(user) { return res.status(400).json({message: 'Username already exists!'})};
+  });
 
   var user = new User();
 

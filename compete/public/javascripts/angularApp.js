@@ -80,6 +80,7 @@ function($scope, auth, posts){
   $scope.posts = posts.posts;
   $scope.isLoggedIn = auth.isLoggedIn;
 
+  $scope.currentUser = auth.currentUser;
   $scope.addPost = function(){
     if(!$scope.title || $scope.title === '') {return}
     posts.create({
@@ -90,6 +91,10 @@ function($scope, auth, posts){
 	$scope.title = '';
 	$scope.link = '';
         $scope.description = '';
+  };
+
+  $scope.deletePost = function(post){
+    posts.delete(post);
   };
 
   $scope.incrementUpvotes = function(post) {

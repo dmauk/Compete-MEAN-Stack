@@ -8,7 +8,10 @@
 	</div>
   </div>
   <div class="row mx-auto w-75">
-    <div class="col-lg">
+    <div ng-hide="posts[0]" class="col-6 offset-md-3 text-center">
+	  Looks like this user hasn't posted anything!
+	</div>
+    <div ng-show="posts[0]" class="col-lg">
 	  <div ng-repeat="post in posts | orderBy:'-upvotes'">
 	    <div class="mt-3 card bg-dark text-white">
 		  <div class="row no-gutters">

@@ -32,9 +32,10 @@
 			  </div>
 			</div>
 		  </div>
-		  <div class="card-footer border-top border-info w-100 text-muted">
+		  <div class="card-footer border-top border-info pt-3 w-100 text-muted">
 		    <div class="row">
 		      <div class="col-9 text-left">
+			    <a ng-show="(post.author==currentUser())" ng-click="deletePost(post)" class="btn btn-sm btn-outline-danger">DELETE</a>
 			    Posted By: <a class="text-info" href="/#/profile/{{post.author}}">{{post.author}}</a>
 			  </div>
 			  <div class="col-3 text-right">
