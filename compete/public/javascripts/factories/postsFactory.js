@@ -23,6 +23,21 @@ app.factory('posts', ['$http','auth', function($http, auth){
 	});
   };
 
+  o.delete = function(postToRemove) {
+    if(auth.currentUser() != postToRemove.author){
+      console.log('Cannot delete because you are not the author!');
+      return;
+    }
+
+
+    return $http.post('/posts/' + postToRemove._id + '/delete', null, {
+      headers: {Authorization: 'Bearer '+auth.getToken()}
+    }).success(function(data){
+      var index = o.posts.indexOf(postToRemove);
+      if(index!==-1) { o.posts.splice(index,1);}
+    });
+  };
+
   o.get = function(id) {
     return $http.get('/posts/' + id).then(function(res){
       return res.data;
@@ -39,8 +54,8 @@ app.factory('posts', ['$http','auth', function($http, auth){
 
   o.addComment = function(id, comment) {
     return $http.post('/posts/' + id + '/comments', comment, {
-	  headers: {Authorization: 'Bearer ' +auth.getToken()}
-	});
+      headers: {Authorization: 'Bearer ' +auth.getToken()}
+    });
   };
 
   o.upvoteComment = function(post, comment) {
