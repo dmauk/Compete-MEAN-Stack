@@ -1,6 +1,8 @@
 <div class="container">
   <div class="m-5 jumbotron">
     <h1 class="display-4 text-info text-center">Compete</h1>
+	<hr class="mt-4">
+    <p class="text-center alert alert-warning lead">Disclaimer: The content on this test site can be created by anyone and does <b class="text-danger">NOT</b> reflect my actual beliefs.</p>
   </div>
   <div class="row mx-auto w-75">
     <div class="col-lg">
@@ -53,7 +55,10 @@
       <hr class="mt-5"></hr>
       <form ng-submit="addPost()" ng-show="isLoggedIn()" style="margin-top:30px;">
         <h3>Add a new post</h3>
-  
+        <div class="alert alert-danger" role="alert" ng-show="error">
+          {{error}}
+        </div>
+
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
         </div>
@@ -68,7 +73,7 @@
 
         <button type="submit" class="btn btn-info">Post</button>
       </form>
-  
+
       <div class="alert alert-warning" role="alert" ng-hide="isLoggedIn()">
         You need to <a class="text-info" href="/#/login">Log In</a> or <a class="text-info" href="/#/register">Register</a> before you can add a post.
       </div>
